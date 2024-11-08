@@ -13,14 +13,16 @@ installBuild:
 
   environment.systemPackages = with pkgs; [ git ];
 
-  isoImage.compressImage = false;
-  isoImage.squashfsCompression = null;
-  isoImage.isoBaseName = "nixos-offline-installer";
-  isoImage.isoName = "${config.isoImage.isoBaseName}-${config.system.nixos.label}-${pkgs.stdenv.hostPlatform.system}.iso";
-  isoImage.makeEfiBootable = true;
-  isoImage.makeUsbBootable = true;
-  isoImage.volumeID = "NIXOS_ISO";
-  isoImage.storeContents = [ installBuild.toplevel ];
+  isoImage = {
+    compressImage = false;
+    squashfsCompression = null;
+    isoBaseName = "nixos-offline-installer";
+    isoName = "${config.isoImage.isoBaseName}-${config.system.nixos.label}-${pkgs.stdenv.hostPlatform.system}.iso";
+    makeEfiBootable = true;
+    makeUsbBootable = true;
+    volumeID = "NIXOS_ISO";
+    storeContents = [ installBuild.toplevel ];
+  };
 
   nix.extraOptions = ''
     experimental-features = nix-command flakes

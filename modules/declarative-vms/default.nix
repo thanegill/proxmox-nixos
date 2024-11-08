@@ -8,31 +8,30 @@
 let
   cfg = config.virtualisation.proxmox;
 in
-with lib;
 
 {
-  meta.maintainers = with maintainers; [
+  meta.maintainers = with lib.maintainers; [
     julienmalka
     camillemndn
   ];
 
   options.virtualisation.proxmox = (import ./options.nix { inherit config lib; }).options // {
-    node = mkOption {
-      type = types.str;
+    node = lib.mkOption {
+      type = lib.types.str;
       description = "The cluster node name.";
     };
 
-    name = mkOption {
-      type = types.str;
+    name = lib.mkOption {
+      type = lib.types.str;
       default = config.networking.hostName;
       description = "Set a name for the VM. Only used on the configuration web interface.";
     };
 
-    autoInstall = mkEnableOption "Automatically install the NixOS configuration on the VM";
+    autoInstall = lib.mkEnableOption "Automatically install the NixOS configuration on the VM";
 
-    iso = mkOption {
+    iso = lib.mkOption {
       default = null;
-      type = types.package;
+      type = lib.types.package;
       description = "Iso that will be inserted into the VM. Not compatible with the autoInstall option";
     };
 
